@@ -1,0 +1,337 @@
+
+##------- SIMULATIONS ---------
+
+## Look below  for the initial set-up to set the number of simulations, number of generations, and number of children in each generation
+## You might also try to lower or raise the general plasticity setting in training, but we recommend 0.1 or 1.
+## You will need to change the directories for output files at the appropriate points. Search for 'outfile$' in this script.
+
+
+## Read in files to begin 
+
+## Read in .Collection file with initial grammar setup
+## Change these directories as appropriate
+Read from file... /Users/rpsandell/Documents/Dropbox/Germanic Preterites/LSA/NewLearningInputFiles/GermanicInput_Final.Collection
+## Read in the Distribution file with the frequencies of different token types
+Read from file... /Users/rpsandell/Documents/Dropbox/Germanic Preterites/LSA/NewLearningInputFiles/GermanicDist_Final.txt
+## Remove the useless PairDistribution object from the .Collection file
+selectObject: 2
+Remove
+
+## Set the constraint weights and plasticity of the constraints in the initial grammar to the Initial State
+## Comment out Constraint 14 if not using a version with RM-PL
+selectObject:1
+## Try both ExponentialMaximumEntropy and MaximumEntropy
+Set decision strategy... MaximumEntropy
+Reset all rankings... 100.0
+# Fill in here the the settings for initial constraint weights and plasticity
+## Try setting Integrity at 100 or 200
+Set ranking... 1 100 100
+Set constraint plasticity... 1 0.1
+# Repeat for all constraints; this can't really be generalized, because you have to know in advance which constraint numbers correspond to which constraints 
+Set ranking... 2 100 100
+Set constraint plasticity... 2 0.1
+Set ranking... 3 100 100
+Set constraint plasticity... 3 0.1
+Set ranking... 4 100 100
+Set constraint plasticity... 4 0.1
+## Try setting *[a] at 0, 100, 200
+Set ranking... 5 200 200
+Set constraint plasticity... 5 1.0
+Set ranking... 6 100 100
+Set constraint plasticity... 6 0.1
+Set ranking... 7 100.0 100.0
+Set constraint plasticity... 7 0.1
+Set ranking... 8 100.0 100.0
+Set constraint plasticity... 8 0.1
+Set ranking... 9 100.0 100.0
+Set constraint plasticity... 9 0.1
+Set ranking... 10 0 0
+Set constraint plasticity... 10 10
+Set ranking... 11 0 0
+Set constraint plasticity... 11 10
+Set ranking... 12 200 200
+Set constraint plasticity... 12 1
+Set ranking... 13 200 200
+Set constraint plasticity... 13 1
+## Set ranking... 14 200 200
+## Set constraint plasticity... 14 1.0
+
+
+## GENERAL SETTINGS
+
+## Manually set number of simulations
+numberSimulations= 1
+## Manually set number of learning generations per simulation
+numberGenerations  = 5
+## Manually set number of children per generation
+numberChildren = 5
+## Manually set number of seed data training tokens. 12000 or 18000 recommended
+numberSeedTokens = 12000
+## Manually set general level of plasticity multiplier -- try 0.1 or 0.01
+valuePlasticity = 0.1
+
+## Initialize simulations
+for simulation from 1 to numberSimulations
+	## Initialize Generation
+	for generation from 1 to numberGenerations
+		generationNumber$ = string$ (generation)
+		## Create child learners for each generation
+		for child from 1 to numberChildren
+			childNumber$ = string$ (child)
+			childName$ = "Generation" + generationNumber$ + "Child" + childNumber$
+			selectObject: 1
+			Copy... 'childName$'
+		endfor
+		## For Generation 1, train first on Seed Data (Object 3)
+		if generation = 1
+			## Iterate over children and train each child on set number of tokens of seed data
+			for interval from 1 to numberChildren
+				selectObject: 3
+				To Strings... 1 numberSeedTokens
+				currentStrings = selected ("Strings", -1)
+				currentInterval$ = string$ (interval)
+				childToSelect$ = "OTGrammar Generation" + generationNumber$ + "Child" + currentInterval$
+				selectObject:currentStrings,childToSelect$
+				## Can also set the number immediately after "Symmetric All" to 0.01 for lower plasticity -- but this works less well, bcs. the morphological constraints don't increase in weight fast enough
+				Learn from partial outputs... 0.0 "Symmetric all" valuePlasticity 0.1 1 1 0
+				selectObject:currentStrings
+				Remove
+			endfor
+			## Iterate over each child and train each child on the current output distributions of each child
+			for firstchild from 1 to numberChildren
+				currentChild$ = string$ (firstchild)
+				childA$ = "OTGrammar Generation" + generationNumber$ + "Child" + currentChild$
+				## Create new Distribution object from childA winners
+				## childA$ = "Gen1Child2"
+				outFile$ = "/Users/rpsandell/Documents/Dropbox/Germanic Preterites/LSA/NewLearningInputFiles/SimulationResults/TempDist" + childA$ + ".txt"
+				sep$ = tab$
+				## outFile$ = "/Users/rpsandell/Documents/Dropbox/Germanic Preterites/LSA/NewLearningInputFiles/SimulationResults/TempDistTest.txt"
+				header$ = """ooTextFile""" + newline$ + """Distributions""" + newline$ + "1 column with numeric data" + newline$+ """PGmc."""+ newline$ + "10 rows" + newline$
+				appendFile: outFile$, header$
+				selectObject:childA$
+				numberTableaux = Get number of tableaus
+				for tableau from 1 to numberTableaux
+					currentWinner = Get winner... tableau
+					currentWinningCandidate$ = Get candidate... tableau currentWinner
+					currentWinningCandidate2$ = replace_regex$ (currentWinningCandidate$, "].*"  , "]" , 1)
+					## \\\-\>.* -- old Regex; the new one is simpler
+					## We have to manually specify the right type frequencies for each tableau winner
+					if tableau = 1 or tableau = 6
+						data$ = """" + currentWinningCandidate2$ + """" + " 34" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 2 or tableau = 5
+						data$ = """" + currentWinningCandidate2$ + """" + " 78" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 3
+						data$ = """" + currentWinningCandidate2$ + """" + " 278" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 4 or tableau = 9
+						data$ = """" + currentWinningCandidate2$ + """" + " 33" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 7 or tableau = 8
+						data$ = """" + currentWinningCandidate2$ + """" + " 22" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 10
+						## NB no newline$ here -- otherwise the Distributions file will have an extra line!
+						data$ = """" + currentWinningCandidate2$ + """" + " 56"
+						appendFile: outFile$, data$
+					endif
+				endfor
+				## Read in the newly created distributions file
+				Read from file... 'outFile$'
+				currentChildADistribution = selected ("Distributions", -1)
+				## Delete the temporary Distributions file saved outside Praat
+				deleteFile: outFile$
+				## To output Distributions... 10000 0
+				## The number of training tokens will be equal to a fraction of the seed token data
+				## To Strings... 1 round(numberSeedTokens/numberChildren)
+				## Replace all... "\|.*\| \\\-\> " "" 0 regular expressions
+				## Replace all... "\\\-\>.*" "" 0 regular expressions
+				## Sort
+				## currentStringDistributions = selected ("Strings", -1)
+				## Iterate over all children and train them on the current child's output distribution
+				for secondchild from 1 to numberChildren
+					currentChild$ = string$ (secondchild)
+					childB$ = "OTGrammar Generation" + generationNumber$ + "Child" + currentChild$
+					selectObject: currentChildADistribution
+					To Strings... 1 round(numberSeedTokens/numberChildren)
+					currentStringDistributions = selected ("Strings", -1)
+					selectObject:childB$, currentStringDistributions
+					Learn from partial outputs... 0.0 "Symmetric all" valuePlasticity 0.1 1 1 0
+					selectObject: currentStringDistributions
+					Remove
+				endfor
+				## selectObject:(currentStringDistributions-3),(currentStringDistributions-2),(currentStringDistributions-1),currentStringDistributions
+				## Remove the distributions object
+				selectObject: currentChildADistribution
+				Remove
+				## Also train this child on an equal number of tokens from the seed distribution
+				selectObject:3
+				To Strings... 1 round(numberSeedTokens/numberChildren)
+				currentStringDistributions = selected ("Strings", -1)
+				selectObject:childA$,currentStringDistributions
+				Learn from partial outputs... 0.0 "Symmetric all" valuePlasticity 0.1 1 1 0
+				selectObject:currentStringDistributions
+				Remove
+			endfor
+		## End 1st Generation If loop			
+		endif
+		## For Generations 2-NumberOfGenerations, train first on the children of the preceding generation
+		if generation > 1
+			## Set the numerical value of the preceding generation
+			precedingGeneration$ = string$ (generation - 1)
+			for firstchild from 1 to numberChildren
+				## Get strings from a child of the preceding generation
+				currentChild$ = string$ (firstchild)
+				childA$ = "OTGrammar Generation" + precedingGeneration$ + "Child" + currentChild$
+				## Set name for temporary distribution file
+				outFile$ = "/Users/rpsandell/Documents/Dropbox/Germanic Preterites/LSA/NewLearningInputFiles/SimulationResults/TempDist" + childA$ + ".txt"
+				sep$ = tab$
+				header$ = """ooTextFile""" + newline$ + """Distributions""" + newline$ + "1 column with numeric data" + newline$+ """PGmc."""+ newline$ + "10 rows" + newline$
+				appendFile: outFile$, header$
+				selectObject:childA$
+				## Build temporary Distribution file
+				numberTableaux = Get number of tableaus
+				for tableau from 1 to numberTableaux
+					currentWinner = Get winner... tableau
+					currentWinningCandidate$ = Get candidate... tableau currentWinner
+					currentWinningCandidate2$ = replace_regex$ (currentWinningCandidate$, "].*"  , "]" , 1)
+					## \\\-\>.* -- old Regex; the new one is simpler
+					## We have to manually specify the right type frequencies for each tableau winner
+					if tableau = 1 or tableau = 6
+						data$ = """" + currentWinningCandidate2$ + """" + " 34" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 2 or tableau = 5
+						data$ = """" + currentWinningCandidate2$ + """" + " 78" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 3
+						data$ = """" + currentWinningCandidate2$ + """" + " 278" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 4 or tableau = 9
+						data$ = """" + currentWinningCandidate2$ + """" + " 33" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 7 or tableau = 8
+						data$ = """" + currentWinningCandidate2$ + """" + " 22" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 10
+						## NB no newline$ here -- otherwise the Distributions file will have an extra line!
+						data$ = """" + currentWinningCandidate2$ + """" + " 56"
+						appendFile: outFile$, data$
+					endif
+				endfor
+				## Read in the newly created distributions file
+				Read from file... 'outFile$'
+				currentChildADistribution = selected ("Distributions", -1)
+				## Delete the temporary Distributions file saved outside Praat
+				deleteFile: outFile$
+				for secondchild from 1 to numberChildren
+					currentChild$ = string$ (secondchild)
+					childB$ = "OTGrammar Generation" + generationNumber$ + "Child" + currentChild$
+					selectObject: currentChildADistribution
+					To Strings... 1 round(numberSeedTokens/numberChildren)
+					currentStringDistributions = selected ("Strings", -1)
+					selectObject:childB$, currentStringDistributions
+					Learn from partial outputs... 0.0 "Symmetric all" valuePlasticity 0.1 1 1 0
+					selectObject: currentStringDistributions
+					Remove
+				endfor
+				## selectObject:(currentStringDistributions-3),(currentStringDistributions-2),(currentStringDistributions-1),currentStringDistributions
+				## Remove the distributions object
+				selectObject: currentChildADistribution
+				Remove
+			## End training loop from data of preceding generation 
+			endfor
+			## Train on current generation children
+			for firstchild from 1 to numberChildren
+				## Get distributions from a child of the current generation
+				currentChild$ = string$ (firstchild)
+				childA$ = "OTGrammar Generation" + generationNumber$ + "Child" + currentChild$
+				## Set name for temporary distribution file
+				outFile$ = "/Users/rpsandell/Documents/Dropbox/Germanic Preterites/LSA/NewLearningInputFiles/SimulationResults/TempDist" + childA$ + ".txt"
+				sep$ = tab$
+				header$ = """ooTextFile""" + newline$ + """Distributions""" + newline$ + "1 column with numeric data" + newline$+ """PGmc."""+ newline$ + "10 rows" + newline$
+				appendFile: outFile$, header$
+				selectObject:childA$
+				## Build temporary Distribution file
+				numberTableaux = Get number of tableaus
+				## Iterate over all tableaux
+				for tableau from 1 to numberTableaux
+					currentWinner = Get winner... tableau
+					currentWinningCandidate$ = Get candidate... tableau currentWinner
+					currentWinningCandidate2$ = replace_regex$ (currentWinningCandidate$, "].*"  , "]" , 1)
+					## \\\-\>.* -- old Regex; the new one is simpler
+					## We have to manually specify the right type frequencies for each tableau winner
+					if tableau = 1 or tableau = 6
+						data$ = """" + currentWinningCandidate2$ + """" + " 34" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 2 or tableau = 5
+						data$ = """" + currentWinningCandidate2$ + """" + " 78" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 3
+						data$ = """" + currentWinningCandidate2$ + """" + " 278" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 4 or tableau = 9
+						data$ = """" + currentWinningCandidate2$ + """" + " 33" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 7 or tableau = 8
+						data$ = """" + currentWinningCandidate2$ + """" + " 22" + newline$
+						appendFile: outFile$, data$
+					elsif tableau = 10
+						## NB no newline$ here -- otherwise the Distributions file will have an extra line!
+						data$ = """" + currentWinningCandidate2$ + """" + " 56"
+						appendFile: outFile$, data$
+					endif
+				endfor
+				## Read in the newly created distributions file
+				Read from file... 'outFile$'
+				currentChildADistribution = selected ("Distributions", -1)
+				## Delete the temporary Distributions file saved outside Praat
+				deleteFile: outFile$
+				for secondchild from 1 to numberChildren
+					currentChild$ = string$ (secondchild)
+					childB$ = "OTGrammar Generation" + generationNumber$ + "Child" + currentChild$
+					selectObject: currentChildADistribution
+					To Strings... 1 round(numberSeedTokens/numberChildren)
+					currentStringDistributions = selected ("Strings", -1)
+					selectObject:childB$, currentStringDistributions
+					Learn from partial outputs... 0.0 "Symmetric all" valuePlasticity 0.1 1 1 0
+					selectObject: currentStringDistributions
+					Remove
+				endfor
+				## selectObject:(currentStringDistributions-3),(currentStringDistributions-2),(currentStringDistributions-1),currentStringDistributions
+				## Remove the distributions object
+				selectObject: currentChildADistribution
+				Remove
+			## End training loop from data of preceding generation 
+			endfor
+			## End Child Training loop
+			## endfor
+		## End Generation > 1 If loop		
+		endif
+	## End generation creation loop
+	endfor
+## HERE: output simulation results
+	outFile$ = "/Users/rpsandell/Documents/Dropbox/Germanic Preterites/LSA/NewLearningInputFiles/SimulationResults/Simulation" + (string$ (simulation)) + ".txt"
+	sep$ = tab$
+	for child from 1 to numberChildren
+		childLabel$ = "Child" + (string$ (child)) + newline$
+		appendFile: outFile$, childLabel$
+		header$ = "string1" + sep$ + "string2" + sep$ + "weight" + newline$
+		appendFile: outFile$, header$
+		selectObject: "OTGrammar Generation" + generationNumber$ + "Child" + (string$ (child))
+		To PairDistribution... 100000 0.0
+		To Table
+		numberRows = Get number of rows
+		for row from 1 to numberRows
+			col1$ = Get value... row string1
+			col2$ = Get value... row string2
+			col3$ = Get value... row weight
+			appendFile: outFile$, col1$ + sep$ + col2$ + sep$ + col3$ + newline$
+		endfor
+	endfor	
+## You can select every child, output their pair distributions, make those distributions into a table, and write out the table
+## End simulation loop
+endfor
+
+
+

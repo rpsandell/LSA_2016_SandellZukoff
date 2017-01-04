@@ -1,0 +1,148 @@
+File type = "ooTextFile"
+Object class = "Collection"
+
+size = 2
+item[]:
+	item[1]:
+		class = "OTGrammar 1"
+		name = "Gram"
+<LinearOT>
+13 constraints
+constraint [1]: "INTEGRITY" 100 100 ! INTEGRITY
+constraint [2]: "MAX[+back]-IO" 100 100 ! MAX[+back]-IO
+constraint [3]: "DEP-[+back]-IO" 100 100 ! DEP-[+back]-IO
+constraint [4]: "DEP[-back]-IO" 100 100 ! DEP[-back]-IO
+constraint [5]: "*[a]" 100 100 ! *[a]
+constraint [6]: "IDENT-[back]-CH" 100 100 ! IDENT-[back]-CH
+constraint [7]: "DEP-[+long]" 100 100 ! DEP-[+long]
+constraint [8]: "MAX-C-" 100 100 ! MAX-C-
+constraint [9]: "MAX-V-" 100 100 ! MAX-V-
+constraint [10]: "RM-PRET" 100 100 ! RM-PRET
+constraint [11]: "*Haplology" 100 100 ! *Haplology
+constraint [12]: "PCR" 100 100 ! PCR
+constraint [13]: "*SPRHVY" 100 100 ! *SPRHVY
+
+0 fixed rankings
+
+10 tableaus
+input [1]: "|hait-PRET-sg|" 8
+	candidate [1]: "[hehait] \-> /CV, hait/" 2.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [2]: "[hahait] \-> /CV, hait/" 2.0 0.0 0.0 0.0 2.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+	candidate [3]: "[heheit] \-> /CV, hait/" 2.0 1.0 0.0 2.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+	candidate [4]: "[hait] \-> /hait/" 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0
+	candidate [5]: "[hait] \-> /CV, hait/" 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0
+	candidate [6]: "[hAjt] \-> /hait/" 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 1.0
+	candidate [7]: "[hehait] \-> /C,e, hait/" 1.0 0.0 0.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [8]: "[hahait] \-> /C,e, hait/" 1.0 0.0 1.0 0.0 2.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+input [2]: "|beid-PRET-sg|" 8
+	candidate [1]: "[bebaid] \-> /CV, beid/" 2.0 0.0 1.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [2]: "[baid] \-> /beid/" 0.0 0.0 1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [3]: "[bebeid] \-> /CV, beid/" 2.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+	candidate [4]: "[beid] \-> /CV, beid/" 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0
+	candidate [5]: "[beid] \-> /beid/" 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0
+	candidate [6]: "[bEid] \-> /beid/" 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 1.0
+	candidate [7]: "[bebaid] \-> /C, e, beid/" 1.0 0.0 1.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [8]: "[babaid] \-> /C, e, beid/" 1.0 0.0 2.0 0.0 2.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+input [3]: "|beid-PRES|" 3
+	candidate [1]: "[beid] \-> /beid/" 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [2]: "[baid] \-> /beid/" 0.0 0.0 1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [3]: "[bebeid] \-> /CV, beid/" 2.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+input [4]: "|ber-PRET-pl|" 6
+	candidate [1]: "[bEr] \-> /ber/" 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [2]: "[bEr] \-> /CV, ber/" 2.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0
+	candidate [3]: "[bEr] \-> /CV, ber/" 2.0 0.0 0.0 0.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0 0.0
+	candidate [4]: "[bebr] \-> /CV, ber/" 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0
+	candidate [5]: "[ber] \-> /ber/" 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0
+	candidate [6]: "[bEr] \-> /C, e, ber/" 1.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0
+input [5]: "|beid-PRET-pl|" 7
+	candidate [1]: "[bebid] \-> /CV, beid/" 2.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0
+	candidate [2]: "[bid] \-> /beid/" 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0
+	candidate [3]: "[bebeid] \-> /CV, beid/" 2.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+	candidate [4]: "[beid] \-> /CV, beid/" 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0
+	candidate [5]: "[beid] \-> /beid/" 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0
+	candidate [6]: "[bebid] \-> /C, e, beid/" 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0
+	candidate [7]: "[babid] \-> /C, e, beid/" 1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0
+input [6]: "|hait-PRET-pl|" 9
+	candidate [1]: "[hehait] \-> /CV, hait/" 2.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [2]: "[hahait] \-> /CV, hait/" 2.0 0.0 0.0 0.0 2.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+	candidate [3]: "[heheit] \-> /CV, hait/" 2.0 1.0 0.0 2.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+	candidate [4]: "[hait] \-> /hait/" 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0
+	candidate [5]: "[hait] \-> /CV, hait/" 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0
+	candidate [6]: "[hehit] \-> /CV, hait/" 2.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0
+	candidate [7]: "[hAjt] \-> /hait/" 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 1.0
+	candidate [8]: "[hehait] \-> /C,e, hait/" 1.0 0.0 0.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [9]: "[hahait] \-> /C,e, hait/" 1.0 0.0 1.0 0.0 2.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+input [7]: "|dab-PRET-sg|" 9
+	candidate [1]: "[dedab] \-> /CV, dab/" 2.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [2]: "[dadab] \-> /CV, dab/" 2.0 0.0 0.0 0.0 2.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+	candidate [3]: "[dAb] \-> /dab/" 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [4]: "[dab] \-> /CV, dab/" 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0
+	candidate [5]: "[dab] \-> /dab/" 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0
+	candidate [6]: "[deb] \-> /CV, dab/" 0.0 1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [7]: "[deb] \-> /dab/" 0.0 1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [8]: "[dedab] \-> /C,e, dab/" 1.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [9]: "[dadab] \-> /C,e, dab/" 1.0 0.0 1.0 1.0 2.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+input [8]: "|dab-PRET-pl|" 7
+	candidate [1]: "[dEb] \-> /CV, dab/" 2.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0
+	candidate [2]: "[dEb] \-> /dab/" 0.0 1.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [3]: "[dAb] \-> /dab/" 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [4]: "[deb] \-> /dab/" 0.0 1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+	candidate [5]: "[dedb] \-> /CV, dab/" 2.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0
+	candidate [6]: "[dab] \-> /CV, dab/" 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0
+	candidate [7]: "[dEb] \-> /C,e, dab/" 1.0 1.0 0.0 1.0 0.0 0.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0
+input [9]: "|ber-PRET-sg|" 7
+	candidate [1]: "[bebar] \-> /CV, ber/" 2.0 0.0 1.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [2]: "[bar] \-> /ber/" 0.0 0.0 1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [3]: "[beber] \-> /CV, ber/" 2.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+	candidate [4]: "[ber] \-> /CV, ber/" 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0
+	candidate [5]: "[ber] \-> /ber/" 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0
+	candidate [6]: "[bebar] \-> /C, e, ber/" 1.0 0.0 1.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [7]: "[bebar] \-> /C, e, ber/" 1.0 0.0 2.0 0.0 2.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0
+input [10]: "|dab-PRES|" 3
+	candidate [1]: "[dab] \-> /dab/" 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [2]: "[deb] \-> /dab/" 0.0 1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	candidate [3]: "[dedab] \-> /CV, dab/" 2.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+item [2]:
+	class = "PairDistribution"
+	name = "current language"
+	pairs: size = 10
+	pairs [1]:
+		string1 = "|hait-PRET-sg|"
+		string2 = "[hehait] \-> /CV, hait/"
+		weight = 100
+	pairs [2]:
+		string1 = "|beid-PRET-sg|"
+		string2 = "[bebaid] \-> /CV, beid/"
+		weight = 100
+	pairs [3]:
+		string1 = "|beid-PRES|"
+		string2 = "[beid] \-> /beid/"
+		weight = 100
+	pairs [4]:
+		string1 = "|ber-PRET-pl|"
+		string2 = "[bEr] \-> /ber/"
+		weight = 100
+	pairs [5]:
+		string1 = "|beid-PRET-pl|"
+		string2 = "[bebid] \-> /CV, beid/"
+		weight = 100
+	pairs [6]:
+		string1 = "|hait-PRET-pl|"
+		string2 = "[hehit] \-> /CV, hait/"
+		weight = 100
+	pairs [7]:
+		string1 = "|dab-PRET-sg|"
+		string2 = "[dedab] \-> /CV, dab/"
+		weight = 100
+	pairs [8]:
+		string1 = "|dab-PRET-pl|"
+		string2 = "[dEb] \-> /CV, dab/"
+		weight = 100
+	pairs [9]:
+		string1 = "|ber-PRET-sg|"
+		string2 = "[bebar] \-> /CV, ber/"
+		weight = 100
+	pairs [10]:
+		string1 = "|dab-PRES|"
+		string2 = "[dab] \-> /dab/"
+		weight = 100

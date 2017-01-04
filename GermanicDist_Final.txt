@@ -1,0 +1,15 @@
+"ooTextFile"
+"Distributions"
+1 column with numeric data
+"PGmc."
+10 rows
+"[bebaid]" 78
+"[bebid]" 78
+"[bEr]" 33
+"[dEb]" 22
+"[dedab]" 22
+"[bebar]" 33
+"[hehait]" 34
+"[hehit]" 34
+"[beid]" 278
+"[dab]" 56
